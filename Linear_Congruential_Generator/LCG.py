@@ -26,18 +26,22 @@ class CrackLCG:
         self.states.insert(0, (self.states[0] - self.c) * inverse(self.a, self.modulus) % self.modulus)
     def genNextState(self):
         self.states.append((self.a * self.states[-1] + self.c) % self.modulus)
-    def getStates(self):
-        return self.states
 
 def testLCG(num=10):
-    mod = getPrime(64)
-    a = randrange(1, mod-1)
-    c = randrange(1, mod-1)
-    seed = randrange(1, mod-1)
-    L = LCG(mod, a, c, seed)
+    # generate states
+    modulus = getPrime(64)
+    a = randrange(1, modulus-1)
+    c = randrange(1, modulus-1)
+    seed = randrange(1, modulus-1)
+    L = LCG(modulus, a, c, seed)
     states = [L.next() for _ in range(num)]
+
+    # crack LCG and generate another states
     CL = CrackLCG(states)
     for _ in range(num):
         CL.genNextState()
         states.append(L.next())
-    assert CL.getStates() == states
+    assert CL.a == a
+    assert CL.modulus == modulus
+    assert CL.c == c
+    assert CL.states == states
