@@ -1,5 +1,7 @@
 # Linear Congruential Generator
+
 - Written in python
 
 ## Related CTF Challenges
-- Hology CTF 2020 - Pattern
+
+- Access Denied CTF 2022 - Guess The Number
